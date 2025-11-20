@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop, feature/**, copilot/** ]
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    container:
+      image: chocotechnologies/dmod:1.0.4
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Build dmlist project
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. -DDMOD_MODE=DMOD_MODULE
+          cmake --build .
+      
+      - name: Verify build artifacts
+        run: |
+          echo "Build artifacts:"
+          ls -lh build/dmf/
+          test -f build/dmf/dmlist.dmf
+          echo "Build completed successfully!"
