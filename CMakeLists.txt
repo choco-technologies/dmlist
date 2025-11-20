@@ -12,11 +12,6 @@ if(NOT DEFINED DMOD_MODULE_VERSION)
     set(DMOD_MODULE_VERSION "0.1" CACHE STRING "DMOD module version")
 endif()
 
-project(dmlist 
-    VERSION ${DMOD_MODULE_VERSION}
-    DESCRIPTION "DMOD Linked List"
-    LANGUAGES C CXX)
-
 # ======================================================================
 #               Fetch DMOD repository
 # ======================================================================
@@ -38,6 +33,11 @@ set(DMOD_BUILD_TEMPLATES OFF CACHE BOOL "Build templates")
 
 FetchContent_MakeAvailable(dmod)
 
+project(dmlist 
+    VERSION ${DMOD_MODULE_VERSION}
+    DESCRIPTION "DMOD Linked List"
+    LANGUAGES C CXX)
+    
 # ======================================================================
 #               Import dmod functions and macros
 # ======================================================================
