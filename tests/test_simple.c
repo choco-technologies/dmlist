@@ -65,7 +65,11 @@ int main(void) {
     // Test 7: Pop front
     printf("Pop Front: ");
     int* popped = (int*)dmlist_pop_front(list);
-    if(popped == NULL || *popped != 10 || dmlist_size(list) != 2) {
+    if(popped == NULL) {
+        TEST_FAIL();
+        return 1;
+    }
+    if(*popped != 10 || dmlist_size(list) != 2) {
         TEST_FAIL();
         return 1;
     }
@@ -74,7 +78,11 @@ int main(void) {
     // Test 8: Pop back
     printf("Pop Back: ");
     popped = (int*)dmlist_pop_back(list);
-    if(popped == NULL || *popped != 30 || dmlist_size(list) != 1) {
+    if(popped == NULL) {
+        TEST_FAIL();
+        return 1;
+    }
+    if(*popped != 30 || dmlist_size(list) != 1) {
         TEST_FAIL();
         return 1;
     }
