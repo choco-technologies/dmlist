@@ -9,6 +9,8 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     container:
       image: chocotechnologies/dmod:1.0.2
     
@@ -49,6 +51,8 @@ jobs:
 
   coverage:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     container:
       image: chocotechnologies/dmod:1.0.2
     steps:
