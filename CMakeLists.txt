@@ -70,16 +70,17 @@ include(${DMOD_DIR}/paths.cmake)
 # ======================================================================
 #               DMOD List Interface Library
 # ======================================================================
+set(MODULE_NAME dmlist)
+
 add_library(dmlist_if INTERFACE)
-target_include_directories(${MODULE_NAME} 
-    PUBLIC 
+target_include_directories(dmlist_if 
+    INTERFACE 
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 # ======================================================================
 #               DMOD List Library
 # ======================================================================
-set(MODULE_NAME dmlist)
 add_library(${MODULE_NAME} STATIC
     src/dmlist.c
 )
