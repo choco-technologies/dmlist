@@ -8,9 +8,9 @@
 int main(void) {
     printf("=== Simple DMLIST Test ===\n");
     
-    // Test 1: Initialize
-    printf("Init: ");
-    dmlist_context_t* list = dmlist_init("test");
+    // Test 1: Create
+    printf("Create: ");
+    dmlist_context_t* list = dmlist_create("test");
     if(list == NULL) {
         TEST_FAIL();
         return 1;

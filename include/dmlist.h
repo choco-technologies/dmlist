@@ -36,13 +36,13 @@ typedef bool (*dmlist_iterator_func_t)(void* data, void* user_data);
 typedef int (*dmlist_compare_func_t)(const void* data1, const void* data2);
 
 /**
- * @brief Initialize a linked list context.
+ * @brief Create a linked list context.
  * 
  * @param module_name Name of the module using the list (for memory tracking).
  * 
- * @return Pointer to the list context, or NULL if initialization fails.
+ * @return Pointer to the list context, or NULL if creation fails.
  */
-DMOD_BUILTIN_API( dmlist, 1.0, dmlist_context_t*, _init, ( const char* module_name ) );
+DMOD_BUILTIN_API( dmlist, 1.0, dmlist_context_t*, _create, ( const char* module_name ) );
 
 /**
  * @brief Destroy a linked list and free all its nodes.

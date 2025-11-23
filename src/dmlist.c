@@ -59,11 +59,11 @@ static void free_node( dmlist_node_t* node )
     }
 }
 
-DMOD_INPUT_API_DECLARATION( dmlist, 1.0, dmlist_context_t*, _init, ( const char* module_name ) )
+DMOD_INPUT_API_DECLARATION( dmlist, 1.0, dmlist_context_t*, _create, ( const char* module_name ) )
 {
     if( module_name == NULL )
     {
-        DMOD_LOG_ERROR("dmlist: _init called with NULL module_name.\n");
+        DMOD_LOG_ERROR("dmlist: _create called with NULL module_name.\n");
         return NULL;
     }
     
@@ -80,7 +80,7 @@ DMOD_INPUT_API_DECLARATION( dmlist, 1.0, dmlist_context_t*, _init, ( const char*
     strncpy( ctx->module_name, module_name, DMOD_MAX_MODULE_NAME_LENGTH - 1 );
     ctx->module_name[DMOD_MAX_MODULE_NAME_LENGTH - 1] = '\0';
     
-    DMOD_LOG_INFO("dmlist: Initialized list for module %s.\n", module_name);
+    DMOD_LOG_INFO("dmlist: Created list for module %s.\n", module_name);
     
     return ctx;
 }

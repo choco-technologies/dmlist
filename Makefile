@@ -8,7 +8,7 @@
 #       
 # ##############################################################################
 ifeq ($(DMOD_DIR),)
-    DMOD_DIR = _codeql_build_dir/_deps/dmod-src
+    DMOD_DIR = build/_deps/dmod-src
 endif
 
 #
@@ -18,7 +18,7 @@ DMOD_LIB_NAME=libdmlist.a
 DMOD_SOURCES=src/dmlist.c
 DMOD_INC_DIRS = include\
 		$(DMOD_DIR)/inc\
-		_codeql_build_dir/_deps/dmod-build
+		build/_deps/dmod-build
 DMOD_LIBS = dmod_inc
 DMOD_GEN_HEADERS_IN = 
 DMOD_DEFINITIONS = DMLIST_VERSION_STRING="== dmlist ver. 1.0 ==\n"
