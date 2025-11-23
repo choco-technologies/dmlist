@@ -72,7 +72,7 @@ include(${DMOD_DIR}/paths.cmake)
 # ======================================================================
 add_library(dmlist_if INTERFACE)
 target_include_directories(${MODULE_NAME} 
-    INTERFACE 
+    PUBLIC 
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
