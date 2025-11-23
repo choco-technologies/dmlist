@@ -68,6 +68,15 @@ endif()
 include(${DMOD_DIR}/paths.cmake)
 
 # ======================================================================
+#               DMOD List Interface Library
+# ======================================================================
+add_library(dmlist_if INTERFACE)
+target_include_directories(${MODULE_NAME} 
+    INTERFACE 
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+# ======================================================================
 #               DMOD List Library
 # ======================================================================
 set(MODULE_NAME dmlist)
