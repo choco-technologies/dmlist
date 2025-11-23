@@ -1,9 +1,0 @@
-# ===============    Main module    ===============
-# Main module manifest for dmlist
-# This file provides module download URLs and version information
-
-# Include dynamically generated versions list from latest release
-$include https://github.com/choco-technologies/dmlist/releases/download/vlatest/versions.dmm
-
-# Module entries with version placeholder - will be expanded by $version-available
-dmlist https://github.com/choco-technologies/dmlist/releases/download/v<version>/dmlist-v<version>-<arch_name>.zip
