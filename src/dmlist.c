@@ -1,3 +1,4 @@
+#define DMOD_ENABLE_REGISTRATION
 #include "dmlist.h"
 #include <string.h>
 
