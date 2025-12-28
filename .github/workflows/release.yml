@@ -63,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: release-package
-          path: dmlist-${{ github.event.release.tag_name }}-*.zip
+          path: dmlist-${{ github.event.release.tag_name }}.zip
           retention-days: 1
 
   generate-versions-manifest:
@@ -139,7 +139,7 @@ jobs:
           set -e
           # Upload all release archives to the GitHub release
           shopt -s nullglob
-          zip_files=(artifacts/release-*/*.zip)
+          zip_files=(artifacts/release-package/*.zip)
           
           if [ ${#zip_files[@]} -eq 0 ]; then
             echo "Error: No artifacts found to upload"
@@ -201,7 +201,7 @@ jobs:
         run: |
           set -e
           shopt -s nullglob
-          zip_files=(artifacts/release-*/*.zip)
+          zip_files=(artifacts/release-package/*.zip)
           
           for zip_file in "${zip_files[@]}"; do
             echo "Uploading $zip_file to vlatest..."
