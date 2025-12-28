@@ -53,7 +53,8 @@ jobs:
       - name: Create release archive
         run: |
           cd release_package
-          zip -r ../dmlist-${{ github.event.release.tag_name }}-arch_name.zip .
+          # dmlist is architecture-independent (headers only), so no arch suffix needed
+          zip -r ../dmlist-${{ github.event.release.tag_name }}.zip .
           cd ..
           echo "Created archive:"
           ls -lh dmlist-*.zip
@@ -85,10 +86,8 @@ jobs:
           echo "" >> versions.dmm
           
           # Get all version tags (starting with 'v') and extract version numbers
-          VERSIONS=$(git tag -l 'v*' | sed 's/^v//' | sort -V | tr '\n' ' ' | sed 's/ $//')
-          
-          # Remove vlatest from the list if present
-          VERSIONS=$(echo $VERSIONS | sed 's/\blatest\b//g' | xargs)
+          # Exclude vlatest tag from the list
+          VERSIONS=$(git tag -l 'v*' | grep -v '^vlatest$' | sed 's/^v//' | sort -V | tr '\n' ' ' | sed 's/ $//' | xargs)
 
           if [ -z "$VERSIONS" ]; then
             echo "Warning: No version tags found"

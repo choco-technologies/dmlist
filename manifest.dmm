@@ -2,4 +2,5 @@
 $include https://github.com/choco-technologies/dmlist/releases/download/vlatest/versions.dmm
 
 # Module entries with version placeholder - will be expanded by $version-available
-dmlist https://github.com/choco-technologies/dmlist/releases/download/v<version>/dmlist-v<version>-<arch_name>.zip
+# dmlist is architecture-independent (headers only)
+dmlist https://github.com/choco-technologies/dmlist/releases/download/v<version>/dmlist-v<version>.zip
