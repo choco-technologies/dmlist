@@ -81,26 +81,28 @@ target_include_directories(dmlist_if
 # ======================================================================
 #               DMOD List Library
 # ======================================================================
-add_library(${MODULE_NAME} STATIC
-    src/dmlist.c
-)
-
-target_compile_definitions(${MODULE_NAME} 
-    PRIVATE 
-        DMLIST_VERSION_STRING="== dmlist ver. ${PROJECT_VERSION} ==\\n"
-)
-
-target_include_directories(${MODULE_NAME} 
-    PUBLIC 
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-)   
-
-target_link_libraries(${MODULE_NAME} 
-    PUBLIC    
-        dmod_inc
+if(DMOD_SYSTEM)
+    add_library(${MODULE_NAME} STATIC
+        src/dmlist.c
     )
 
-create_library_makefile(${MODULE_NAME})
+    target_compile_definitions(${MODULE_NAME} 
+        PRIVATE 
+            DMLIST_VERSION_STRING="== dmlist ver. ${PROJECT_VERSION} ==\\n"
+    )
+
+    target_include_directories(${MODULE_NAME} 
+        PUBLIC 
+            ${CMAKE_CURRENT_SOURCE_DIR}/include
+    )   
+
+    target_link_libraries(${MODULE_NAME} 
+        PUBLIC    
+            dmod_inc
+        )
+
+    create_library_makefile(${MODULE_NAME})
+endif()
 
 # ======================================================================
 #               Tests
