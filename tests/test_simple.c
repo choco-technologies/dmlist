@@ -5,6 +5,13 @@
 #define TEST_PASS() printf("PASS\n")
 #define TEST_FAIL() printf("FAIL\n")
 
+// Comparison function for integers
+static int compare_int(const void* a, const void* b) {
+    const int* ia = (const int*)a;
+    const int* ib = (const int*)b;
+    return *ia - *ib;
+}
+
 int main(void) {
     printf("=== Simple DMLIST Test ===\n");
     
@@ -111,13 +118,6 @@ int main(void) {
     dmlist_push_back(list, &val7);
     dmlist_push_back(list, &val8);
     
-    // Comparison function for integers
-    int compare_int(const void* a, const void* b) {
-        const int* ia = (const int*)a;
-        const int* ib = (const int*)b;
-        return *ia - *ib;
-    }
-    
     // Find first occurrence of 10
     int search_val = 10;
     int* found1 = (int*)dmlist_find_next(list, NULL, &search_val, compare_int);
@@ -150,6 +150,14 @@ int main(void) {
     // Test with NULL last_found should behave like find
     int* found_from_start = (int*)dmlist_find_next(list, NULL, &search_val, compare_int);
     if(found_from_start == NULL || found_from_start != &val4) {
+        TEST_FAIL();
+        return 1;
+    }
+    
+    // Test with invalid last_found (not in list) should return NULL
+    int external_val = 99;
+    int* found_invalid = (int*)dmlist_find_next(list, &external_val, &search_val, compare_int);
+    if(found_invalid != NULL) {
         TEST_FAIL();
         return 1;
     }
