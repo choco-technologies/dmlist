@@ -144,6 +144,18 @@ DMOD_BUILTIN_API( dmlist, 1.0, void, _clear, ( dmlist_context_t* ctx ) );
 DMOD_BUILTIN_API( dmlist, 1.0, void*, _find, ( dmlist_context_t* ctx, const void* data, dmlist_compare_func_t compare_func ) );
 
 /**
+ * @brief Find the next occurrence of an element in the list.
+ * 
+ * @param ctx          Pointer to the list context.
+ * @param last_found   Pointer to the last found data (NULL to start from beginning).
+ * @param data         Pointer to the data to find.
+ * @param compare_func Comparison function to use.
+ * 
+ * @return Pointer to the found data, or NULL if not found.
+ */
+DMOD_BUILTIN_API( dmlist, 1.0, void*, _find_next, ( dmlist_context_t* ctx, const void* last_found, const void* data, dmlist_compare_func_t compare_func ) );
+
+/**
  * @brief Remove an element from the list.
  * 
  * @param ctx          Pointer to the list context.

@@ -301,6 +301,44 @@ DMOD_INPUT_API_DECLARATION( dmlist, 1.0, void*, _find, ( dmlist_context_t* ctx, 
     return NULL;
 }
 
+DMOD_INPUT_API_DECLARATION( dmlist, 1.0, void*, _find_next, ( dmlist_context_t* ctx, const void* last_found, const void* data, dmlist_compare_func_t compare_func ) )
+{
+    if( ctx == NULL || compare_func == NULL )
+    {
+        return NULL;
+    }
+    
+    dmlist_node_t* current = ctx->head;
+    
+    // If last_found is not NULL, find the node containing it and start from the next one
+    if( last_found != NULL )
+    {
+        // Find the node containing last_found
+        while( current != NULL )
+        {
+            if( current->data == last_found )
+            {
+                // Start from the next node
+                current = current->next;
+                break;
+            }
+            current = current->next;
+        }
+    }
+    
+    // Search for the data starting from current
+    while( current != NULL )
+    {
+        if( compare_func( current->data, data ) == 0 )
+        {
+            return current->data;
+        }
+        current = current->next;
+    }
+    
+    return NULL;
+}
+
 DMOD_INPUT_API_DECLARATION( dmlist, 1.0, bool, _remove, ( dmlist_context_t* ctx, const void* data, dmlist_compare_func_t compare_func ) )
 {
     if( ctx == NULL || compare_func == NULL )

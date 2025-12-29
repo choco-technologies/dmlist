@@ -97,7 +97,66 @@ int main(void) {
     }
     TEST_PASS();
     
-    // Test 10: Destroy
+    // Test 10: Find and find_next
+    printf("Find and Find Next: ");
+    // Add values with duplicates
+    int val4 = 10;
+    int val5 = 20;
+    int val6 = 10;
+    int val7 = 30;
+    int val8 = 10;
+    dmlist_push_back(list, &val4);
+    dmlist_push_back(list, &val5);
+    dmlist_push_back(list, &val6);
+    dmlist_push_back(list, &val7);
+    dmlist_push_back(list, &val8);
+    
+    // Comparison function for integers
+    int compare_int(const void* a, const void* b) {
+        const int* ia = (const int*)a;
+        const int* ib = (const int*)b;
+        return *ia - *ib;
+    }
+    
+    // Find first occurrence of 10
+    int search_val = 10;
+    int* found1 = (int*)dmlist_find_next(list, NULL, &search_val, compare_int);
+    if(found1 == NULL || *found1 != 10 || found1 != &val4) {
+        TEST_FAIL();
+        return 1;
+    }
+    
+    // Find second occurrence of 10
+    int* found2 = (int*)dmlist_find_next(list, found1, &search_val, compare_int);
+    if(found2 == NULL || *found2 != 10 || found2 != &val6) {
+        TEST_FAIL();
+        return 1;
+    }
+    
+    // Find third occurrence of 10
+    int* found3 = (int*)dmlist_find_next(list, found2, &search_val, compare_int);
+    if(found3 == NULL || *found3 != 10 || found3 != &val8) {
+        TEST_FAIL();
+        return 1;
+    }
+    
+    // Try to find fourth occurrence (should return NULL)
+    int* found4 = (int*)dmlist_find_next(list, found3, &search_val, compare_int);
+    if(found4 != NULL) {
+        TEST_FAIL();
+        return 1;
+    }
+    
+    // Test with NULL last_found should behave like find
+    int* found_from_start = (int*)dmlist_find_next(list, NULL, &search_val, compare_int);
+    if(found_from_start == NULL || found_from_start != &val4) {
+        TEST_FAIL();
+        return 1;
+    }
+    
+    TEST_PASS();
+    
+    // Test 11: Destroy
     printf("Destroy: ");
     dmlist_destroy(list);
     TEST_PASS();
