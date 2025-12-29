@@ -283,22 +283,7 @@ DMOD_INPUT_API_DECLARATION( dmlist, 1.0, void, _clear, ( dmlist_context_t* ctx )
 
 DMOD_INPUT_API_DECLARATION( dmlist, 1.0, void*, _find, ( dmlist_context_t* ctx, const void* data, dmlist_compare_func_t compare_func ) )
 {
-    if( ctx == NULL || compare_func == NULL )
-    {
-        return NULL;
-    }
-    
-    dmlist_node_t* current = ctx->head;
-    while( current != NULL )
-    {
-        if( compare_func( current->data, data ) == 0 )
-        {
-            return current->data;
-        }
-        current = current->next;
-    }
-    
-    return NULL;
+    return dmlist_find_next( ctx, NULL, data, compare_func );
 }
 
 DMOD_INPUT_API_DECLARATION( dmlist, 1.0, void*, _find_next, ( dmlist_context_t* ctx, const void* last_found, const void* data, dmlist_compare_func_t compare_func ) )
