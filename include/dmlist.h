@@ -198,12 +198,24 @@ DMOD_BUILTIN_API( dmlist, 1.0, void*, _get, ( dmlist_context_t* ctx, size_t posi
 
 /**
  * @brief Remove an element at a specific position in the list.
- * 
+ *
  * @param ctx      Pointer to the list context.
  * @param position Position to remove (0 = front).
- * 
+ *
  * @return Pointer to the removed data, or NULL if position is out of bounds.
  */
 DMOD_BUILTIN_API( dmlist, 1.0, void*, _remove_at, ( dmlist_context_t* ctx, size_t position ) );
+
+/**
+ * @brief Sort the list in place using the given comparator.
+ *
+ * The sort is stable: elements that compare equal keep their relative order.
+ *
+ * @param ctx          Pointer to the list context.
+ * @param compare_func Comparison function used to order elements.
+ *
+ * @return true if successful, false otherwise (e.g. NULL ctx or compare_func).
+ */
+DMOD_BUILTIN_API( dmlist, 1.0, bool, _sort, ( dmlist_context_t* ctx, dmlist_compare_func_t compare_func ) );
 
 #endif // DMLIST_H

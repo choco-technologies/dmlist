@@ -456,6 +456,103 @@ DMOD_INPUT_API_DECLARATION( dmlist, 1.0, void*, _get, ( dmlist_context_t* ctx, s
     return current->data;
 }
 
+/**
+ * @brief Merge two sorted singly-linked chains of nodes (via ->next only).
+ *
+ * @param left         Head of the first sorted chain.
+ * @param right        Head of the second sorted chain.
+ * @param compare_func Comparison function used to order elements.
+ *
+ * @return Head of the merged sorted chain.
+ */
+static dmlist_node_t* merge_sorted_chains( dmlist_node_t* left, dmlist_node_t* right, dmlist_compare_func_t compare_func )
+{
+    dmlist_node_t dummy;
+    dmlist_node_t* tail = &dummy;
+
+    while( left != NULL && right != NULL )
+    {
+        if( compare_func( left->data, right->data ) <= 0 )
+        {
+            tail->next = left;
+            left = left->next;
+        }
+        else
+        {
+            tail->next = right;
+            right = right->next;
+        }
+        tail = tail->next;
+    }
+
+    tail->next = ( left != NULL ) ? left : right;
+
+    return dummy.next;
+}
+
+/**
+ * @brief Recursively sort a singly-linked chain of nodes (via ->next only) using merge sort.
+ *
+ * @param head         Head of the chain to sort.
+ * @param compare_func Comparison function used to order elements.
+ *
+ * @return Head of the sorted chain.
+ */
+static dmlist_node_t* merge_sort_chain( dmlist_node_t* head, dmlist_compare_func_t compare_func )
+{
+    if( head == NULL || head->next == NULL )
+    {
+        return head;
+    }
+
+    // Split into two halves using slow/fast pointers
+    dmlist_node_t* slow = head;
+    dmlist_node_t* fast = head->next;
+
+    while( fast != NULL && fast->next != NULL )
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    dmlist_node_t* right = slow->next;
+    slow->next = NULL;
+
+    dmlist_node_t* sorted_left = merge_sort_chain( head, compare_func );
+    dmlist_node_t* sorted_right = merge_sort_chain( right, compare_func );
+
+    return merge_sorted_chains( sorted_left, sorted_right, compare_func );
+}
+
+DMOD_INPUT_API_DECLARATION( dmlist, 1.0, bool, _sort, ( dmlist_context_t* ctx, dmlist_compare_func_t compare_func ) )
+{
+    if( ctx == NULL || compare_func == NULL )
+    {
+        DMOD_LOG_ERROR("dmlist: _sort called with NULL context or compare_func.\n");
+        return false;
+    }
+
+    if( ctx->size < 2 )
+    {
+        return true;
+    }
+
+    ctx->head = merge_sort_chain( ctx->head, compare_func );
+
+    // Rebuild prev links and find the new tail
+    dmlist_node_t* prev = NULL;
+    dmlist_node_t* current = ctx->head;
+    while( current != NULL )
+    {
+        current->prev = prev;
+        prev = current;
+        current = current->next;
+    }
+    ctx->tail = prev;
+
+    return true;
+}
+
 DMOD_INPUT_API_DECLARATION( dmlist, 1.0, void*, _remove_at, ( dmlist_context_t* ctx, size_t position ) )
 {
     if( ctx == NULL || position >= ctx->size )

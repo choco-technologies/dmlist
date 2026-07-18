@@ -164,7 +164,50 @@ int main(void) {
     
     TEST_PASS();
     
-    // Test 11: Destroy
+    // Test 11: Sort
+    printf("Sort: ");
+    dmlist_clear(list);
+    int s1 = 5, s2 = 3, s3 = 8, s4 = 1, s5 = 3, s6 = 9;
+    dmlist_push_back(list, &s1);
+    dmlist_push_back(list, &s2);
+    dmlist_push_back(list, &s3);
+    dmlist_push_back(list, &s4);
+    dmlist_push_back(list, &s5);
+    dmlist_push_back(list, &s6);
+    if(!dmlist_sort(list, compare_int)) {
+        TEST_FAIL();
+        return 1;
+    }
+    int expected[] = { 1, 3, 3, 5, 8, 9 };
+    for(size_t i = 0; i < dmlist_size(list); i++) {
+        int* v = (int*)dmlist_get(list, i);
+        if(v == NULL || *v != expected[i]) {
+            TEST_FAIL();
+            return 1;
+        }
+    }
+    // Stability check: the two equal 3's must keep their original relative order (s2 before s5)
+    if(dmlist_get(list, 1) != &s2 || dmlist_get(list, 2) != &s5) {
+        TEST_FAIL();
+        return 1;
+    }
+    // Front/back and prev links must be consistent after sort
+    if(*(int*)dmlist_front(list) != 1 || *(int*)dmlist_back(list) != 9) {
+        TEST_FAIL();
+        return 1;
+    }
+    // Walk backwards from back to front using pop_back to check prev links weren't corrupted
+    int reversed_expected[] = { 9, 8, 5, 3, 3, 1 };
+    for(size_t i = 0; i < 6; i++) {
+        int* v = (int*)dmlist_pop_back(list);
+        if(v == NULL || *v != reversed_expected[i]) {
+            TEST_FAIL();
+            return 1;
+        }
+    }
+    TEST_PASS();
+
+    // Test 12: Destroy
     printf("Destroy: ");
     dmlist_destroy(list);
     TEST_PASS();
