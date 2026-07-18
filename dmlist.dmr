@@ -4,12 +4,19 @@
 
 # === Header Files ===
 # Include directory with dmlist.h header
-inc=./include => ${destination}/${module}/include
+inc=./include => ${destination}/${module}/include [origin=${repo_dir}/include]
+
+# === Static Library ===
+# Precompiled static library (architecture-specific build)
+lib=./lib/libdmlist.a => ${destination}/${module}/lib/libdmlist.a [origin=${build_dir}/libdmlist.a]
 
 # === Documentation ===
 # README file
-readme=./README.md => ${destination}/${module}/README.md
+readme=./README.md => ${destination}/${module}/README.md [origin=${repo_dir}/README.md]
 
 # === License ===
 # License file
-license=./LICENSE => ${destination}/${module}/LICENSE
+license=./LICENSE => ${destination}/${module}/LICENSE [origin=${repo_dir}/LICENSE]
+
+# Adding itself
+dmr=./dmlist.dmr => ${destination}/${module}/dmlist.dmr [origin=${repo_dir}/dmlist.dmr]
