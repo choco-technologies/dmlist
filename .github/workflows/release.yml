@@ -103,7 +103,11 @@ jobs:
       - name: Create release archive
         run: |
           set -e
-          zip -r "${PACKAGE_NAME}.zip" "${PACKAGE_NAME}"
+          # zip the package directory's *contents*, not the directory itself -
+          # dmf-get expects <module>.dmr directly at the zip root (see dmini's
+          # release for the working layout), so wrapping everything under a
+          # "${PACKAGE_NAME}/" prefix breaks dmf-get's headers/lib extraction.
+          (cd "${PACKAGE_NAME}" && zip -r "../${PACKAGE_NAME}.zip" .)
           echo "Created archive:"
           ls -lh dmlist-*.zip
 
