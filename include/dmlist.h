@@ -1,7 +1,18 @@
 #ifndef DMLIST_H
 #define DMLIST_H
 
-#include "dmod.h"
+/*
+ * Only dmod_types.h - not the full dmod.h - is needed here: it gives us the
+ * DMOD_BUILTIN_API macro and the Dmod_ApiRegistration_t type it expands to,
+ * without pulling in dmod_sal.h's kernel Built-in API declarations (Dmod_Malloc,
+ * Dmod_FileOpen, ...) or dmod_system.h/dmod_module.h. Those get registered by
+ * whoever actually owns them (dmod_system.c); if this header pulled them in
+ * too, a translation unit that defines DMOD_ENABLE_REGISTRATION to register
+ * dmlist's own API (see dmlist_registrations.c) would also try to re-register
+ * every kernel API, causing "multiple definition" link errors against
+ * dmod_system.c's own registrations.
+ */
+#include "dmod_types.h"
 #include <stddef.h>
 #include <stdbool.h>
 

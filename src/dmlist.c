@@ -1,3 +1,4 @@
+#include "dmod.h"
 #include "dmlist.h"
 #include <string.h>
 

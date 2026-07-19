@@ -85,6 +85,7 @@ target_include_directories(dmlist_if
 if(DMOD_SYSTEM)
     add_library(${MODULE_NAME} STATIC
         src/dmlist.c
+        src/dmlist_registrations.c
     )
 
     target_compile_definitions(${MODULE_NAME}
