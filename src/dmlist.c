@@ -81,7 +81,7 @@ DMOD_INPUT_API_DECLARATION( dmlist, 1.0, dmlist_context_t*, _create, ( const cha
     strncpy( ctx->module_name, module_name, DMOD_MAX_MODULE_NAME_LENGTH - 1 );
     ctx->module_name[DMOD_MAX_MODULE_NAME_LENGTH - 1] = '\0';
     
-    DMOD_LOG_INFO("dmlist: Created list for module %s.\n", module_name);
+    DMOD_LOG_VERBOSE("dmlist: Created list for module %s.\n", module_name);
     
     return ctx;
 }
@@ -94,7 +94,7 @@ DMOD_INPUT_API_DECLARATION( dmlist, 1.0, void, _destroy, ( dmlist_context_t* ctx
     }
     
     dmlist_clear( ctx );
-    DMOD_LOG_INFO("dmlist: Destroyed list for module %s.\n", ctx->module_name);
+    DMOD_LOG_VERBOSE("dmlist: Destroyed list for module %s.\n", ctx->module_name);
     Dmod_Free( ctx );
 }
 
