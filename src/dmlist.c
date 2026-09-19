@@ -60,11 +60,11 @@ static void free_node( dmlist_node_t* node )
     }
 }
 
-DMOD_INPUT_API_DECLARATION( dmlist, 1.0, dmlist_context_t*, _create, ( const char* module_name ) )
+DMOD_INPUT_API_DECLARATION( dmlist, 1.0, dmlist_context_t*, _create_ex, ( const char* module_name ) )
 {
     if( module_name == NULL )
     {
-        DMOD_LOG_ERROR("dmlist: _create called with NULL module_name.\n");
+        DMOD_LOG_ERROR("dmlist: _create_ex called with NULL module_name.\n");
         return NULL;
     }
     

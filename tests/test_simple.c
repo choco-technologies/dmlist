@@ -17,7 +17,7 @@ int main(void) {
     
     // Test 1: Create
     printf("Create: ");
-    dmlist_context_t* list = dmlist_create("test");
+    dmlist_context_t* list = dmlist_create();
     if(list == NULL) {
         TEST_FAIL();
         return 1;

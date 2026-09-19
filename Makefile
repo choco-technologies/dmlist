@@ -21,7 +21,7 @@ DMOD_INC_DIRS = include\
 		build/_deps/dmod-build
 DMOD_LIBS = dmod_inc
 DMOD_GEN_HEADERS_IN = 
-DMOD_DEFINITIONS = DMLIST_VERSION_STRING="== dmlist ver. 1.0 ==\n"
+DMOD_DEFINITIONS = DMLIST_VERSION_STRING="== dmlist ver. 1.0 ==\n" DMOD_CURRENT_ALLOCATOR="dmlist"
 
 # -----------------------------------------------------------------------------
 # 	Initialization of paths

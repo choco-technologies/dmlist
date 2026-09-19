@@ -255,7 +255,7 @@ All simple tests completed!
 
 int main(void) {
     // 1. Create a list
-    dmlist_context_t* list = dmlist_create("main");
+    dmlist_context_t* list = dmlist_create();
     if (list == NULL) {
         return -1;
     }
@@ -292,7 +292,7 @@ int main(void) {
 #include <string.h>
 
 void string_list_example(void) {
-    dmlist_context_t* list = dmlist_create("string_module");
+    dmlist_context_t* list = dmlist_create();
     
     // Add strings to the list
     dmlist_push_back(list, "Hello");
@@ -329,7 +329,7 @@ int compare_ints(const void* a, const void* b) {
 }
 
 void find_example(void) {
-    dmlist_context_t* list = dmlist_create("search_module");
+    dmlist_context_t* list = dmlist_create();
     
     // Add some values
     int values[] = {10, 20, 30, 40, 50};
@@ -370,7 +370,7 @@ bool sum_accumulator(void* data, void* user_data) {
 }
 
 void iteration_example(void) {
-    dmlist_context_t* list = dmlist_create("iter_module");
+    dmlist_context_t* list = dmlist_create();
     
     // Add values
     int values[] = {1, 2, 3, 4, 5};
@@ -399,7 +399,7 @@ void iteration_example(void) {
 #include <stdio.h>
 
 void insert_example(void) {
-    dmlist_context_t* list = dmlist_create("insert_module");
+    dmlist_context_t* list = dmlist_create();
     
     int values[] = {1, 2, 4, 5};
     
@@ -435,7 +435,7 @@ int compare_strings(const void* a, const void* b) {
 }
 
 void remove_example(void) {
-    dmlist_context_t* list = dmlist_create("remove_module");
+    dmlist_context_t* list = dmlist_create();
     
     // Add elements
     dmlist_push_back(list, "apple");
@@ -482,7 +482,7 @@ bool print_student(void* data, void* user_data) {
 }
 
 void struct_example(void) {
-    dmlist_context_t* list = dmlist_create("student_module");
+    dmlist_context_t* list = dmlist_create();
     
     // Create students
     Student s1 = {"Alice", 20, 85.5};
@@ -516,15 +516,28 @@ void struct_example(void) {
 #### `dmlist_create`
 
 ```c
-dmlist_context_t* dmlist_create(const char* module_name);
+dmlist_context_t* dmlist_create(void);
 ```
 
-Create a linked list context.
+Create a linked list context, attributing its allocations to the caller's own
+allocator (`DMOD_CURRENT_ALLOCATOR` - see `dmod_sal.h`). This is a macro around
+`dmlist_create_ex()` and is what you want in almost all cases.
+
+- **Returns:** Pointer to the list context, or `NULL` if creation fails
+- **Note:** All memory allocations for this list will be tracked under the caller's own name
+
+#### `dmlist_create_ex`
+
+```c
+dmlist_context_t* dmlist_create_ex(const char* module_name);
+```
+
+Create a linked list context, attributing its allocations to an explicit owner
+instead of the caller.
 
 - **Parameters:**
-  - `module_name`: Name of the module using the list (for memory tracking)
+  - `module_name`: Name to track this list's memory allocations under
 - **Returns:** Pointer to the list context, or `NULL` if creation fails
-- **Note:** All memory allocations for this list will be tracked under `module_name`
 
 #### `dmlist_destroy`
 
@@ -806,7 +819,7 @@ int compare_priority(const void* a, const void* b) {
 }
 
 void task_queue_example(void) {
-    dmlist_context_t* queue = dmlist_create("task_queue");
+    dmlist_context_t* queue = dmlist_create();
     
     // Add tasks
     Task t1 = {1, "Low priority task"};
@@ -843,7 +856,7 @@ typedef struct {
 
 History* history_create(void) {
     History* hist = (History*)Dmod_Malloc(sizeof(History), "history");
-    hist->list = dmlist_create("history");
+    hist->list = dmlist_create();
     hist->max_size = MAX_HISTORY;
     return hist;
 }
